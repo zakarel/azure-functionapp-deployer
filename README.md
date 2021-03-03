@@ -27,9 +27,7 @@ These instructions will get you a copy of the project up and running on your loc
 1. Cloning the project to you local workstation:
 
 ```
-git clone git@ateam-gitlab.northeurope.cloudapp.azure.com:blue-fifa-covid19/functionapp-deployer.git
-chmod +x deploy.sh
-./deploy.sh
+git clone git@github.com:zakarel/Azure-functionapp-deployer.git
 ```
 2. Add execute permission to the deployment script:
 
