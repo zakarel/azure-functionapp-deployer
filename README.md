@@ -1,6 +1,6 @@
 # Azure FunctionApp deployer (Using existing resources)
 
-<img src="https://img.shields.io/badge/Azure%20CLI%20-v2.19.1-blue?style=flat-square">   <img src="https://img.shields.io/badge/VSCode%20-vv1.53.2-purple?style=flat-square">
+<img src="https://img.shields.io/badge/Azure%20CLI%20-v2.19.1-blue?style=flat-square">   <img src="https://img.shields.io/badge/VSCode%20-v1.53.2-purple?style=flat-square">
 
 
 Deploy Azure funtionapp in 2 major steps:
