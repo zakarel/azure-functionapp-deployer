@@ -6,22 +6,28 @@ subscription=""
 RG=""
 ENV=""
 
+## Required for Signin Option2
+AZ_USER=""
+AZ_PASS=""
+
 # Banner #
 cat banner.txt
 
 # Validation #
 # Checking for a compressed functionapp project
-if [ `find . -name "*.[zip|9z|tar|gz|tgz]*" | wc -l` != 1 ]
+if [ `find . -type f | grep '.zip' | wc -l` != 1 ]
 then
-	echo "Can't find compressed functionapp project in this folder"
-	echo "Please add the archive file to this script same folder and re-run"
-	echo "Make sure ONLY ONE compressed file is inside this folder"
+	echo "Can't find compressed functionapp project in this folder or there is more than 1 in this folder"
+	echo "Please add the zipped file to this script's folder and re-run"
+	echo "Make sure only ONE compressed file is inside this folder"
 	exit 2
 fi
 
-funcProject=`find . -name "*.[zip|9z|tar|gz|tgz]*"`
+funcProject=`find . -type f | grep '.zip'`
 
 # Signin Option1 - Logging (One option should be marked) #
+echo "This script will authenticate with AAD over the web browser now"
+sleep 1
 az login
 az account set -s $subscription
 
@@ -40,20 +46,26 @@ if [ -z $funcName ]
 	 exit 1
 fi
 
+# Drop all -,_ from storage account name #
+stName=`echo "st${funcName//[-,.,_]}"`
+funcName="$funcName-$ENV"
+echo
+sleep 1
+
 az deployment group create \
-  --name tmpl-fifa-functions-nonprod \
+  --name tmpl-functions-$ENV \
   --resource-group $RG \
   --template-file $templateFile \
-  --parameters appName="$funcName" \
+  --parameters siteName=$funcName storageAccountName=$stName environment=$ENV \
   --rollback-on-error \
   --confirm-with-what-if
+
 
 # Deleting Old Template
 if [ $? -eq 0 ]
 then
-	az deployment group delete -g rg-serverless-nonprod-eastus -n tmpl-fifa-functions-nonprod
+	az deployment group delete -g $RG -n tmpl-functions-$ENV
 fi
-
 
 # Deploying FunctionApp #
 echo "FunctionApp Publish Phase..."
