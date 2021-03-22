@@ -35,11 +35,11 @@ chmod +x deploy.sh
 
 ## Configuration
 
-1. Change the following variables (placeholder) inside the ARM Template json file azuredeploy.json
+1. Change the following parameters inside the deploy.sh shell script file:
 ```
     "siteName": "(default: <Input of script>)"
     "storageAccountName": "(default: st$funcName)"
-    "location": "(default: eastus)"
+    "location": "(default: resource group location)"
     "functionWorkerRuntime": "(default: node)" "Accepted strings: node, dotnet, java"
     "environment": "(defualt: dev)" "Accepted strings: dev, prod"
 ```
